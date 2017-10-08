@@ -3,7 +3,7 @@ function im = create_checkerboard( size )
 %   Detailed explanation goes here
 
 % define board "dimensions?" as 8x8
-dimension = 8;
+dimension = 4;
 
 im = zeros(size,size,'single');
 square_size = size / dimension;
