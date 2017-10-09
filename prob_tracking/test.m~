@@ -1,16 +1,28 @@
-% profile on
-% im = im2single(imread('images/hotel.seq0.png'));
+im = im2single(imread('images/hotel.seq0.png'));
+im2 = im2single(imread('images/hotel.seq1.png'));
 % im = im2single(imread('checkboard.png'));
 
 
+% %% test code: 
+% im = create_checkerboard(256);
+% im = imrotate(im,45);
+% imo = im;
+% im = KLT_tracker(im, 0.0002);
+% im2 = im2single(imread('images/hotel.seq1.png'));
+% im2 = KLT_tracker(im2, 0.0002);
+% figure(); imshow(cat(2,im,im2));
+% %%
 
-im = create_checkerboard(128);
-im = imrotate(im,);
-imo = im;
-% figure(); imshow(im);
-im = KLT_tracker(im);
 
-figure(); imshow(cat(2,imo,im));
+% figure(); imshow(10*(im2-im)+0.5);
+
+R = 100;
+xPrime = 200.5;
+yPrime = 200.5;
+[Xq, Yq] = meshgrid(xPrime - R: 1:xPrime + R, yPrime - R: 1 :yPrime + R );
+Vq = interp2(im, Xq, Yq);
+
+figure(); imshow(Vq);
 
 
-
+% test 
