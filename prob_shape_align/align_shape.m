@@ -32,17 +32,62 @@ S2 = variance(x2,y2,cmX2,cmY2);
 % T = [1 0 cmX2; 0 1 cmY2; 0 0 1] * [S2/S1 0 0; 0 S2/S1 0; 0 0 1] * [ 1 0 -cmX1; 0 1 -cmY1; 0 0 1];
 % T = [1 0 0; 0 1 0; cmX2 0 cmY2] * [S2/S1 0 0; 0 S2/S1 0; 0 0 1] * [ 1 0 0; 0 1 0; -cmX1 -cmY1 1]
 T = [1 0.01 0.01; 0.01 1 0.01; 0 0 1];
+% T = [1 0 dX; 0 1 dY; 0 0 1];
+T = rotate_T_matrix(T,pi/2);
+
+% IDEA: randomly RANDOM points such that the numbe of points between
+% images is equal
+[r1,c1] = size(x1);
+[r2,c2] = size(x2);
+num_to_remove = r1-r2;
+if r1 > r2
+    to_remove = randperm(r1,num_to_remove);
+    for i = 1:num_to_remove
+        x1(to_remove(i)) = -1;
+        y1(to_remove(i)) = -1;
+    end
+    
+    to_remove = sort(to_remove);
+    
+    for i = 1:num_to_remove
+        x1(to_remove(i)-i+1) = [];
+        y1(to_remove(i)-i+1) = [];
+    end
+    
+    
+elseif r1 < r2
+    to_remove = randperm(r2,num_to_remove);
+    for i = 1:num_to_remove
+        x2(to_remove(i)) = -1;
+        y2(to_remove(i)) = -1;
+    end
+    
+    to_remove = sort(to_remove);
+    
+    for i = 1:num_to_remove
+        x2(to_remove(i)-i+1) = [];
+        y2(to_remove(i)-i+1) = [];
+    end
+    
+end
+
+
 
 
 
 % CODE TO APPLY GRADIENT DESCENT
-alpha = 0.001;
-n_gd_iter = 1;
+alpha = 1;
+n_gd_iter = 500;
+D = pdist2([x1,y1],[x2,y2]);
+new_x1 = x1; new_y1 = y1;
+[np1, np2] = size(D);
+nmp = min(np1,np2);     % computer the number of matched point pairs
 for iter = 1:n_gd_iter
     % compute closest pairs
     % each row is p1 compared to a p2
-    D = pdist2([x1,y1],[x2,y2]);
-    [np1, np2] = size(D);
+    new_x1 = T(1,1)*x1 + T(1,2)*y1 + T(1,3);
+    new_y1 = T(2,1)*x1 + T(2,2)*y1 + T(2,3);
+    D = pdist2([new_x1,new_y1],[x2,y2]);
     
     % = 1 ITERATION OF GRADIENT DESCENT
     a = T(1,1);
@@ -61,11 +106,15 @@ for iter = 1:n_gd_iter
 
     % initial point : p1
     % target point  : p2
-    for p1 = 1:np1
+    for p1 = 1:nmp  % only iterate up to the number of matched points
         % first, find the minimum value
         min_dist = min(D(p1,:));
         min_idxs = find(D(p1,:) == min_dist);
+%         p1
+        
         p2 = min_idxs(1);
+        % need to make sure p2 is not used again for this iteration
+        D(:,p2) = realmax('single');
         
         x = x1(p1);
         y = y1(p1);
@@ -78,26 +127,31 @@ for iter = 1:n_gd_iter
         g_i = g/i;
         h_i = h/i;
         
-        a_deriv_sum = a_deriv_sum + x*g_i;
-        b_deriv_sum = b_deriv_sum + y*g_i;
+%         a_deriv_sum = a_deriv_sum + x*g_i;
+%         b_deriv_sum = b_deriv_sum + y*g_i;
         c_deriv_sum = c_deriv_sum + g_i;
-        d_deriv_sum = d_deriv_sum + x*h_i;
-        e_deriv_sum = e_deriv_sum + y*h_i;
+%         d_deriv_sum = d_deriv_sum + x*h_i;
+%         e_deriv_sum = e_deriv_sum + y*h_i;
         f_deriv_sum = f_deriv_sum + h_i;
     end
     
     % update the constants
-    T(1,1) = T(1,1) - alpha * a_deriv_sum / np1;
-    T(1,2) = T(1,2) - alpha * b_deriv_sum / np1;
-    T(1,3) = T(1,3) - alpha * c_deriv_sum / np1;
-    T(2,1) = T(2,1) - alpha * d_deriv_sum / np1;
-    T(2,2) = T(2,2) - alpha * e_deriv_sum / np1;
-    T(2,3) = T(2,3) - alpha * f_deriv_sum / np1;
+%     T(1,1) = T(1,1) - alpha * a_deriv_sum / nmp;
+%     T(1,2) = T(1,2) - alpha * b_deriv_sum / nmp;
+    T(1,3) = T(1,3) - alpha * c_deriv_sum / nmp;
+%     T(2,1) = T(2,1) - alpha * d_deriv_sum / nmp;
+%     T(2,2) = T(2,2) - alpha * e_deriv_sum / nmp;
+    T(2,3) = T(2,3) - alpha * f_deriv_sum / nmp;
     
     
 end
 
-% T
+% do gradient descent, again??
+
+
+
+
+T
 
 % print original image
 % figure(); imshow(im1);
