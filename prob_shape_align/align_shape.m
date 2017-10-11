@@ -6,8 +6,10 @@ function T = align_shape(im1, im2)
 % Output: transformation T [3] x [3]
 
 % 1. Find edge points in im1 and im2. Hint: use ?find?
-[y1, x1] = find(im1 > 0);
-[y2, x2] = find(im2 > 0);
+% [y1, x1] = find(im1 > 0);
+% [y2, x2] = find(im2 > 0);
+[x1, y1] = find(im1 > 0);
+[x2, y2] = find(im2 > 0);
 
 % 2. Compute initial transformation (e.g., compute translation and scaling
 %    by center of mass, variance within each image)
@@ -27,15 +29,15 @@ S2 = variance(x2,y2,cmX2,cmY2);
 %     [ 0 0 1 ]
 
 % initial matrix
-T = [1 0 cmX2; 0 1 cmY2; 0 0 1] * [S2/S1 0 0; 0 S2/S1 0; 0 0 1] * [ 1 0 -cmX1; 0 1 -cmY1; 0 0 1];
+% T = [1 0 cmX2; 0 1 cmY2; 0 0 1] * [S2/S1 0 0; 0 S2/S1 0; 0 0 1] * [ 1 0 -cmX1; 0 1 -cmY1; 0 0 1];
 % T = [1 0 0; 0 1 0; cmX2 0 cmY2] * [S2/S1 0 0; 0 S2/S1 0; 0 0 1] * [ 1 0 0; 0 1 0; -cmX1 -cmY1 1]
-% T = [1 0 0; 0 1 0; 0 0 1];
+T = [1 0.01 0.01; 0.01 1 0.01; 0 0 1];
 
 
 
 % CODE TO APPLY GRADIENT DESCENT
-alpha = 0.01;
-n_gd_iter = 1500;
+alpha = 0.001;
+n_gd_iter = 1;
 for iter = 1:n_gd_iter
     % compute closest pairs
     % each row is p1 compared to a p2
@@ -56,9 +58,7 @@ for iter = 1:n_gd_iter
     d_deriv_sum = 0.0;
     e_deriv_sum = 0.0;
     f_deriv_sum = 0.0;
-    
-    
-    
+
     % initial point : p1
     % target point  : p2
     for p1 = 1:np1
@@ -97,7 +97,39 @@ for iter = 1:n_gd_iter
     
 end
 
-T
+% T
+
+% print original image
+% figure(); imshow(im1);
+% figure(); imshow(im2);
+
+% create a "hybrid" image
+% recall: taking [im1] -> [im2] so we want to map
+% the contents of transposed im1 onto regular im2
+[rows, cols] = size(im2);
+imc = zeros(rows,cols,3,'single');
+imc(:,:,1) = im2;
+imc(:,:,2) = im2;
+imc(:,:,3) = im2;
+
+% add transformed image to hybrid image on green band
+for p1 = 1:np1
+    x = T(1,1)*x1(p1)+T(1,2)*y1(p1)+T(1,3);
+    y = T(2,1)*x1(p1)+T(2,2)*y1(p1)+T(2,3);
+    
+%     x = T(1,1)*x2(p2)+T(1,2)*y2(p2)+T(1,3);
+%     y = T(2,1)*x2(p2)+T(2,2)*y2(p2)+T(2,3);
+    
+    x = round(x);
+    y = round(y);
+    
+    if x > 0 && x <= cols && y > 0 && y <= rows
+        imc(x,y,2) = 1;
+    end
+end
+
+figure(); imshow(imc);
+
 
 
 
