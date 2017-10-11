@@ -7,6 +7,8 @@ im2 = im2single(imread('data/hammer_2.png'));
 % im1 = im2single(imread('data/chicken_1.png'));
 % im2 = im2single(imread('data/chicken_2.png'));
 
+
+
 align_shape(im1,im2);
 
 % A = [ 1 2 3 -1 5 6 7 -1 9 0]

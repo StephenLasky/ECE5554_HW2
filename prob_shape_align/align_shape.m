@@ -77,7 +77,7 @@ end
 
 % CODE TO APPLY GRADIENT DESCENT
 alpha = 1;
-n_gd_iter = 500;
+n_gd_iter = 100;
 D = pdist2([x1,y1],[x2,y2]);
 new_x1 = x1; new_y1 = y1;
 [np1, np2] = size(D);
@@ -87,7 +87,7 @@ for iter = 1:n_gd_iter
     % each row is p1 compared to a p2
     new_x1 = T(1,1)*x1 + T(1,2)*y1 + T(1,3);
     new_y1 = T(2,1)*x1 + T(2,2)*y1 + T(2,3);
-    D = pdist2([new_x1,new_y1],[x2,y2]);
+    D = pdist2([new_x1,new_y1],[x2,y2]);           % I think this is meaningless, come back later
     
     % = 1 ITERATION OF GRADIENT DESCENT
     a = T(1,1);
