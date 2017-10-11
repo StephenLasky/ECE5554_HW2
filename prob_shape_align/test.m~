@@ -1,0 +1,16 @@
+im1 = im2single(imread('data/hammer_1.png'));
+im2 = im2single(imread('data/hammer_2.png'));
+
+% figure(); imshow(im1);
+
+% 1. Find edge points in im1 and im2. Hint: use ?find?
+
+A = [1,2,3,4,5];
+A(2,:) = 5
+
+B = [0 0; 0 0];
+B(3
+
+% pts = getEdgePoints(im1);
+
+disp('Program finished.');
