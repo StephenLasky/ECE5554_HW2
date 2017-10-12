@@ -1,0 +1,27 @@
+function im = opticalFlow( im, imct )
+%UNTITLED13 Summary of this function goes here
+%   Detailed explanation goes here
+
+for i = 1:imct
+    im{1} = filterAndDownsample(2);
+end
+
+% generate all possible keypoints
+[rows,cols] = size(im{1});
+keyXs = zeros(rows*cols,1,'single');
+keyYs = zeros(rows*cols,1,'single');
+
+num = 1;
+for i = 1:rows
+    for j = 1:cols
+        keyYs(num) = i;
+        keyXs(num) = j;
+    end
+end
+
+% all possible keypoints generated, now f
+
+
+
+end
+

@@ -2,10 +2,10 @@ im = im2single(imread('images/hotel.seq0.png'));
 % im2 = im2single(imread('images/hotel.seq1.png'));
 % im = im2single(imread('checkboard.png'));
 
-im = gaussian_filter(im,2);
-im = imresize(im,0.5);
-figure(); imshow(im);
-
+% im = gaussian_filter(im,2);
+% im = imresize(im,0.5);
+% figure(); imshow(im);
+% 
 % %% test code: 
 % im = KLT_tracker(im, 0.0003);
 % figure(); imshow(im);
@@ -18,7 +18,11 @@ figure(); imshow(im);
 % imc(1:rows,1:cols,3) = im;
 % figure(); imshow(imc);
 
-coarseToFine();
+im = generateImageCells(3);
+opticalFlow(im,3);
+
+
+% coarseToFine();
 
 
 % PRIMARY TEST %
