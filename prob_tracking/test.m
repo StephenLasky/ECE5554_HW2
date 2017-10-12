@@ -18,8 +18,8 @@ im = im2single(imread('images/hotel.seq0.png'));
 % imc(1:rows,1:cols,3) = im;
 % figure(); imshow(imc);
 
-im = generateImageCells(3);
-opticalFlow(im,3);
+im = generateImageCells(10);
+opticalFlow(im,10);
 
 
 % coarseToFine();
