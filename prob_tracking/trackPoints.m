@@ -10,6 +10,6 @@ for t = 1:nim-1
     [track_x(:, t+1), track_y(:, t+1)] = getNextPoints(track_x(:, t), track_y(:, t), im{t}, im{t+1}, ws);
 end
 
-[ track_x, track_y ] = validateTrackedPoints( track_x, track_y);
+% [ track_x, track_y ] = validateTrackedPoints( track_x, track_y);
 
 end

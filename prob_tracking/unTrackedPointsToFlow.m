@@ -1,9 +1,9 @@
-function im = trackedPointsToFlow( im, track_x, track_y )
+function im = unTrackedPointsToFlow( im, track_x, track_y )
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
 % track_z: [Number of keypoints] x [nim]
 
-[track_x, track_y] = validateTrackedPoints(track_x,track_y);
+[track_x, track_y] = invalidateTrackedPoints(track_x,track_y);
 
 [rows,cols] = size(im);
 [nkp,nim] = size(track_x);
@@ -15,12 +15,13 @@ for kp = 1:nkp
     for imn = 1:nim
         x = round(track_x(kp,imn));
         y = round(track_y(kp,imn));
-        
-        if imn ~= 1
-            im_overlay(y,x) = 1;
-        else
-            green_overlay(y,x) = 1;
-        end
+        if ~isnan(x) && ~isnan(y)
+            if imn ~= 1
+                im_overlay(y,x) = 1;
+            else
+                green_overlay(y,x) = 1;
+            end
+        end 
     end
 end
 

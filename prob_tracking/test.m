@@ -17,11 +17,13 @@
 
 
 % PRIMARY TEST %
+% tau = 0.00035;
 tau = 0.00035;
 ws = 15;
 im = generateImageCells(50);
 [keyXs, keyYs] = getKeypoints(im{1}, tau);
 [track_x, track_y] = trackPoints(keyXs, keyYs, im, ws);
 im = trackedPointsToFlow( im{1}, track_x, track_y );
+% im = unTrackedPointsToFlow(im{1},track_x,track_y);
 figure(); imshow(im);
 disp('Program finished.');
