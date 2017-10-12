@@ -1,7 +1,6 @@
 function T = align_shape(im1, im2)
 
-% T = [1 0 0; 0 1 0; 0 0 1];
-% return;
+return [1 0 0; 0 1 0; 
 % im1: input edge image 1
 % im2: input edge image 2
 
@@ -31,9 +30,9 @@ S2 = variance(x2,y2,cmX2,cmY2);
 %     [ 0 0 1 ]
 
 % initial matrix
-T = [1 0 cmX2; 0 1 cmY2; 0 0 1] * [S2/S1 0 0; 0 S2/S1 0; 0 0 1] * [ 1 0 -cmX1; 0 1 -cmY1; 0 0 1];
+% T = [1 0 cmX2; 0 1 cmY2; 0 0 1] * [S2/S1 0 0; 0 S2/S1 0; 0 0 1] * [ 1 0 -cmX1; 0 1 -cmY1; 0 0 1];
 % T = [1 0 0; 0 1 0; cmX2 0 cmY2] * [S2/S1 0 0; 0 S2/S1 0; 0 0 1] * [ 1 0 0; 0 1 0; -cmX1 -cmY1 1]
-% T = [1 0.01 0.01; 0.01 1 0.01; 0 0 1];
+T = [1 0.01 0.01; 0.01 1 0.01; 0 0 1];
 % T = [1 0 dX; 0 1 dY; 0 0 1];
 % T = rotate_T_matrix(T,pi/2);
 

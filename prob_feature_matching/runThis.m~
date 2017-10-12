@@ -59,9 +59,9 @@ end
 matches = zeros(2,0);
 mct = 0;    % match count
 for i=1:N1
-    distance = nn(i,1);
+    ratios(i) = nn(i,1) / nn(i,2);
     
-    if distance < 450     % if we have a match
+    if ratios(i) <= 0.8     % if we have a match
         mct = mct + 1;
         matches(:,mct) = [i; nn(i,3)];
     end
