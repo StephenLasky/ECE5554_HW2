@@ -18,6 +18,8 @@ figure(); imshow(im);
 % imc(1:rows,1:cols,3) = im;
 % figure(); imshow(imc);
 
+coarseToFine();
+
 
 % PRIMARY TEST %
 % tau = 0.00035;
@@ -28,5 +30,5 @@ figure(); imshow(im);
 % [track_x, track_y] = trackPoints(keyXs, keyYs, im, ws);
 % im = trackedPointsToFlow( im{1}, track_x, track_y );
 % % im = unTrackedPointsToFlow(im{1},track_x,track_y);
-figure(); imshow(im);
+% figure(); imshow(im);
 disp('Program finished.');
