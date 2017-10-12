@@ -78,8 +78,8 @@ end
 
 
 % CODE TO APPLY GRADIENT DESCENT
-alpha = 0.001;
-n_gd_iter = 200;
+alpha = 0.0001;
+n_gd_iter = 100;
 D = pdist2([x1,y1],[x2,y2]);
 new_x1 = x1; new_y1 = y1;
 [np1, np2] = size(D);
@@ -140,10 +140,10 @@ for iter = 1:n_gd_iter
 %     % update the constants
 %     T(1,1) = T(1,1) - alpha * a_deriv_sum / nmp;
 %     T(1,2) = T(1,2) - alpha * b_deriv_sum / nmp;
-%     T(1,3) = T(1,3) - alpha * c_deriv_sum / nmp;
+    T(1,3) = T(1,3) - alpha * c_deriv_sum / nmp;
 %     T(2,1) = T(2,1) - alpha * d_deriv_sum / nmp;
 %     T(2,2) = T(2,2) - alpha * e_deriv_sum / nmp;
-%     T(2,3) = T(2,3) - alpha * f_deriv_sum / nmp;
+    T(2,3) = T(2,3) - alpha * f_deriv_sum / nmp;
     
     
 end
